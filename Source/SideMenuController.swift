@@ -150,7 +150,11 @@ open class SideMenuController: UIViewController, UIGestureRecognizerDelegate {
         return type(of: self).preferences
     }()
     
-    fileprivate(set) open var centerViewController: UIViewController!
+    fileprivate(set) open var centerViewController: UIViewController! {
+        didSet {
+            setNeedsStatusBarAppearanceUpdate()
+        }
+    }
     fileprivate(set) open var sideViewController: UIViewController!
     var centerNavController: UINavigationController? {
         return centerViewController as? UINavigationController
@@ -209,6 +213,14 @@ open class SideMenuController: UIViewController, UIGestureRecognizerDelegate {
         coordinator.animate(alongsideTransition: { _ in
             self.repositionViews()
         }, completion: nil)
+    }
+
+    override open var childViewControllerForStatusBarStyle: UIViewController? {
+        return centerViewController ?? super.childViewControllerForStatusBarStyle
+    }
+
+    override open var childViewControllerForStatusBarHidden: UIViewController? {
+        return centerViewController ?? super.childViewControllerForStatusBarHidden
     }
     
     // MARK: - Configurations -
