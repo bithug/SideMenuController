@@ -47,10 +47,12 @@ extension SideMenuController {
         centerPanel.addGestureRecognizer(tapRecognizer)
     }
     
+    @objc
     @inline(__always) func handleCenterPanelPanLeft(_ gesture: UIScreenEdgePanGestureRecognizer) {
         handleCenterPanelPan(gesture)
     }
     
+    @objc
     @inline(__always) func handleCenterPanelPanRight(_ gesture: UIScreenEdgePanGestureRecognizer) {
         handleCenterPanelPan(gesture)
     }
@@ -92,17 +94,18 @@ extension SideMenuController {
         
         let updated = centerPanel.frame != centerPanelFrame
         
-        UIView.panelAnimation( duration, animations: { _ in
+        UIView.panelAnimation( duration, animations: {
             self.centerPanel.frame = centerPanelFrame
             self.set(statusUnderlayAlpha: hidden ? 0 : 1)
-        }) { _ in
+        }, completion: {
             if hidden {
                 self.setSideShadow(hidden: hidden)
             }
             completion?(updated)
-        }
+        })
     }
-    
+
+    @objc
     func handleCenterPanelPan(_ recognizer: UIPanGestureRecognizer){
         
         guard canDisplaySideController else {

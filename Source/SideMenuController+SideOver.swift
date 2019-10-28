@@ -52,6 +52,7 @@ extension SideMenuController {
         }
     }
     
+    @objc
     func handleSidePanelPan(_ recognizer: UIPanGestureRecognizer){
         
         guard canDisplaySideController else {
@@ -141,19 +142,22 @@ extension SideMenuController {
             self.centerPanelOverlay.alpha = alpha
             self.set(statusUnderlayAlpha: alpha)
             self.sidePanel.frame = destinationFrame
-            }, completion: { _ in
+            }, completion: {
                 completion?(updated)
         })
     }
     
+    @objc
     func handleLeftSwipe(){
         handleHorizontalSwipe(toLeft: true)
     }
     
+    @objc
     func handleRightSwipe(){
         handleHorizontalSwipe(toLeft: false)
     }
     
+    @objc
     func handleHorizontalSwipe(toLeft left: Bool) {
         if (left && sidePanelPosition.isPositionedLeft) ||
             (!left && !sidePanelPosition.isPositionedLeft) {
